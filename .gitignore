@@ -1,0 +1,5 @@
+jars/
+project/target/
+target
+*.dylib
+*.so

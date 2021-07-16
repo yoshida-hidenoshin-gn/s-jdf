@@ -1,0 +1,20 @@
+FROM amazonlinux:latest AS build-stage
+
+RUN mkdir -p /usr/local/src/jdf-scala/
+RUN curl -L https://www.scala-sbt.org/sbt-rpm.repo | tee /etc/yum.repos.d/sbt-rpm.repo
+RUN yum install -y git gcc java sbt
+COPY ./ /usr/local/src/jdf-scala/
+
+WORKDIR /usr/local/src/jdf-scala/
+RUN curl -sSf https://sh.rustup.rs | sh -s -- -y \
+  && cd jdf/ \
+  && /root/.cargo/bin/cargo build -p jdf-ffi --release \
+  && cp target/release/libjdf_sys.so /usr/local/src/jdf-scala/src/main/resources/libjdf_sys-linux.so
+
+RUN sbt assembly
+
+
+FROM amazonlinux:latest
+COPY --from=build-stage /usr/local/src/jdf-scala/target/scala-2.12/jdf-scala-assembly-0.1.0-SNAPSHOT.jar /usr/local/lib/jdf-scala-assembly.jar
+
+CMD ["cat", "/usr/local/lib/jdf-scala-assembly.jar"]

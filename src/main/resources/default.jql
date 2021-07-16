@@ -1,0 +1,2 @@
+.sample AS sample
+.sample AS sample_when WHEN .sample == 1
