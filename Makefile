@@ -7,12 +7,14 @@ usage:
 
 .PHONY: mac
 amzn:
+	mkdir -p jars
 	cd jdf/ && cargo build --release && cd ../
 	cp target/release/libjdf_sys.dylib src/main/resources/libjdf_sys-apple.dylib
 	sbt assembly
 
 .PHONY: amzn
 amzn:
+	mkdir -p jars
 	docker build . -t s-jdf:amzn_build -f docker/Dockerfile.amazon
 	docker run s-jdf:amzn_build > jars/s-jdf-assembly-amazonlinux.jar
 	docker rmi -f s-jdf:amzn_build
