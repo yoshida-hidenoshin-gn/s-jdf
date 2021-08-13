@@ -22,7 +22,7 @@ case class Statement(
         Array(selector, "AS", alias).mkString(" ")
 
       } else {
-        if (left.isEmpty || operator.isEmpty || right.isEmpty || addon.isEmpty) {
+        if (left.isEmpty && operator.isEmpty && right.isEmpty) {
           Array(selector, "AS", alias, condition.get).mkString(" ")
 
         } else if (addon.nonEmpty) {
