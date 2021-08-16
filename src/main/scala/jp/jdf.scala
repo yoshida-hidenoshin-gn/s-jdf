@@ -65,8 +65,8 @@ class Jdf extends MixinConfig {
         case n if (n == 3) => Some(new Statement(arr(0), arr(2), None, None, None, None, None))
         case n if (n == 4) => Some(new Statement(arr(0), arr(2), Some(arr(3)), None, None, None, None))
         case n if (n == 7) => arr(3) match {
-          case "ARRAY_MAP" => Some(new Statement(arr(0), arr(2), Some(arr(3)), None, None, None, Some(arr(6))))
-          case "WHEN" => Some(new Statement(arr(0), arr(2), Some(arr(3)), Some(arr(4)), Some(arr(5)), Some(arr(6)), None))
+          case "MAP" => Some(new Statement(arr(0), arr(2), Some(arr(3)), None, None, None, Some(arr(6))))
+          case "FLAT_MAP" => Some(new Statement(arr(0), arr(2), Some(arr(3)), Some(arr(4)), Some(arr(5)), Some(arr(6)), None))
           case _ => None
         }
       }
