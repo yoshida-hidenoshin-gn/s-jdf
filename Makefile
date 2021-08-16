@@ -22,8 +22,8 @@ amzn:
 .PHONY: libmac
 libmac:
 	mkdir -p jars
-	cd jdf/ && cargo build --release && cd ../
-	cp target/release/libjdf_sys.dylib src/main/resources/libjdf_sys-apple.dylib
+	cd jdf/ && cargo build --release -p jdf-ffi && cd ../
+	cp jdf/target/release/libjdf_sys.dylib src/main/resources/libjdf_sys-apple.dylib
 
 .PHONY: libamzn
 libamzn:
