@@ -1,6 +1,6 @@
 FROM amazonlinux:latest AS build-stage
 
-RUN mkdir -p /usr/local/src/jdf-scala/
+RUN mkdir -p /usr/local/src/s-jdf/
 RUN yum install -y git gcc
 COPY ./ /usr/local/src/s-jdf/
 
@@ -8,10 +8,10 @@ WORKDIR /usr/local/src/s-jdf/
 RUN curl -sSf https://sh.rustup.rs | sh -s -- -y \
   && cd jdf/ \
   && /root/.cargo/bin/cargo build -p jdf-ffi --release \
-  && cp target/release/libjdf_sys.so /usr/local/src/jdf-scala/src/main/resources/libjdf_sys-linux.so
+  && cp target/release/libjdf_sys.so /usr/local/src/s-jdf/src/main/resources/libjdf_sys-linux.so
 
 
 FROM amazonlinux:latest
-COPY --from=build-stage /usr/local/src/jdf-scala/src/main/resources/libjdf_sys-linux.so /usr/local/lib/libjdf_sys-linux.so
+COPY --from=build-stage /usr/local/src/s-jdf/src/main/resources/libjdf_sys-linux.so /usr/local/lib/libjdf_sys-linux.so
 
 CMD ["cat", "/usr/local/lib/libjdf_sys-linux.so"]

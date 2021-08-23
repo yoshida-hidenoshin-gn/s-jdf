@@ -6,7 +6,7 @@ usage:
 	@echo "    make amzn"
 
 .PHONY: mac
-amzn:
+mac:
 	mkdir -p jars
 	cd jdf/ && cargo build --release && cd ../
 	cp target/release/libjdf_sys.dylib src/main/resources/libjdf_sys-apple.dylib
@@ -28,6 +28,6 @@ libmac:
 .PHONY: libamzn
 libamzn:
 	mkdir -p jars
-	docker build . -t s-jdf:amzn_build -f docker/Dockerfile.amazon.comple
+	docker build . -t s-jdf:amzn_build -f docker/Dockerfile.libamazon
 	docker run s-jdf:amzn_build > src/main/resources/libjdf_sys-linux.so
 	docker rmi -f s-jdf:amzn_build
